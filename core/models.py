@@ -22,7 +22,7 @@ class Tyre(models.Model):
         ('22.5', '22.5'),
     )
 
-    image = models.ImageField('Приложите фотографию колеса:')
+    image = models.ImageField('Приложите фотографию колеса:', upload_to='tyres_photo/')
     type = models.CharField("Тип колеса", max_length=2, null=True, choices=TYRE_TYPES)
     code = models.CharField("Код протектора", max_length=10)
     title = models.CharField("Название", max_length=30)
