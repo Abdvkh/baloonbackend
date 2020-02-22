@@ -1,5 +1,14 @@
 from django.db import models
 
+
+class TyresGroup(models.Model):
+    code = models.CharField("Наименование группы колес", max_length=50)
+    brand = models.CharField("Бренд", max_length=50)
+    
+    def __str__(self):
+        return self.code
+
+
 class Tyre(models.Model):
     TYRE_TYPES = (
         ("Л", "Легковой"),
@@ -22,8 +31,9 @@ class Tyre(models.Model):
         ('22.5', '22.5'),
     )
 
+    group = models.ForeignKey(TyresGroup, blank=True, on_delete=models.CASCADE)
     image = models.ImageField('Приложите фотографию колеса:', upload_to='tyres_photo/')
-    type = models.CharField("Тип колеса", max_length=2, null=True, choices=TYRE_TYPES)
+    type = models.CharField("Тип колеса", max_length=2, choices=TYRE_TYPES)
     code = models.CharField("Код протектора", max_length=10)
     title = models.CharField("Название", max_length=30)
     width = models.CharField('Ширина', max_length=5, choices=WIDTH)
@@ -39,7 +49,19 @@ class Tyre(models.Model):
     max_loading = models.IntegerField("Максимальная нагрузка")
 
     def __str__(self):
-        return self.code
+        return self.code + '|' + self.get_full_size
 
+    @property
     def get_full_size(self):
         return self.width + '/' + self.height + 'R' + self.radius
+    
+    
+class UserInfo(models.Model):
+    full_name = models.CharField("Имя пользователя", max_length=50)
+    address = models.CharField("Адрес пользователя", max_length=50)
+    number = models.IntegerField("Номер пользователя")
+    
+    
+class Feedback(models.Model):
+    message = models.TextField("Сообщение")
+    email = models.EmailField("e-mail", max_length=254)

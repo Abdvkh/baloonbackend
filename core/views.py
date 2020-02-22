@@ -1,17 +1,18 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import viewsets
 
 from .serializers import TyreSerializer
 from .models import Tyre
 
 
-class TestView(APIView):
+class TyresView(APIView):
     
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (AllowAny, )
     
     def get(self, request, *args, **kwargs):
         qs=Tyre.objects.all()
@@ -27,3 +28,7 @@ class TestView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
+    
+class TyreViewSet(viewsets.ModelViewSet):
+    queryset = Tyre.objects.all()
+    serializer_class = TyreSerializer

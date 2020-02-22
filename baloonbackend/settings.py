@@ -13,7 +13,7 @@ SECRET_KEY = '@=$q6&3#sny6dek7iw5tcno4ph)ctb*&_@+2$-qo-(8n6lj_=s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,7 +40,9 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.JSONParser',
-    ]
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
 }
 
 MIDDLEWARE = [
@@ -72,7 +74,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'baloonbackend.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
