@@ -14,10 +14,10 @@ router = routers.DefaultRouter()
 router.register(r'tyres', TyreViewSet)
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('api/token/', obtain_auth_token, name='obtain-token'),
     path('api-auth/', include('rest_framework.urls')),
     path('', TyresView.as_view(), name='test'),
-    path('admin/', admin.site.urls),
-    path('api/token/', obtain_auth_token, name='obtain-token')
     # url(r"^(?P<width>\d+)/(?P<height>\d+)/(?P<radius>\d+\.\d+)$", SearchViewSet.as_view())
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
